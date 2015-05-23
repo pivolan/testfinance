@@ -1,0 +1,6 @@
+services:
+    finance_admin.admin.user:
+        class: Finance\AdminBundle\Admin\UserAdmin
+        arguments: [~, Finance\UserBundle\Entity\User, FinanceAdminBundle:UserAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: User}

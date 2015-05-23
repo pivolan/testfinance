@@ -1,6 +1,6 @@
 <?php
 
-namespace Finance\CoreBundle\Controller;
+namespace Finance\AdminBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController;
 

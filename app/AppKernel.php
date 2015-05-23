@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Finance\CoreBundle\FinanceCoreBundle(),
             new Finance\UserBundle\FinanceUserBundle(),
             new Finance\StockBundle\FinanceStockBundle(),
+            new Finance\AdminBundle\FinanceAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
