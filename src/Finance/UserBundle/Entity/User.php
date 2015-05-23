@@ -22,6 +22,10 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Finance\StockBundle\Entity\Portfolio", mappedBy="user", cascade={"persist", "remove"})
+     **/
+    private $portfolios;
 
     /**
      * Get id
@@ -31,5 +35,45 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->portfolios = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add portfolios
+     *
+     * @param \Finance\StockBundle\Entity\Portfolio $portfolios
+     * @return User
+     */
+    public function addPortfolio(\Finance\StockBundle\Entity\Portfolio $portfolios)
+    {
+        $this->portfolios[] = $portfolios;
+
+        return $this;
+    }
+
+    /**
+     * Remove portfolios
+     *
+     * @param \Finance\StockBundle\Entity\Portfolio $portfolios
+     */
+    public function removePortfolio(\Finance\StockBundle\Entity\Portfolio $portfolios)
+    {
+        $this->portfolios->removeElement($portfolios);
+    }
+
+    /**
+     * Get portfolios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPortfolios()
+    {
+        return $this->portfolios;
     }
 }

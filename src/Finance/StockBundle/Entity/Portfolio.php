@@ -29,6 +29,18 @@ class Portfolio
     private $name;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Finance\StockBundle\Entity\Stock", inversedBy="portfolios")
+     **/
+    private $stocks;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Finance\UserBundle\Entity\User", inversedBy="portfolios")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     **/
+    private $user;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -39,7 +51,7 @@ class Portfolio
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,7 +74,7 @@ class Portfolio
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -85,10 +97,73 @@ class Portfolio
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stocks
+     *
+     * @param \Finance\StockBundle\Entity\Stock $stocks
+     * @return Portfolio
+     */
+    public function addStock(\Finance\StockBundle\Entity\Stock $stocks)
+    {
+        $this->stocks[] = $stocks;
+
+        return $this;
+    }
+
+    /**
+     * Remove stocks
+     *
+     * @param \Finance\StockBundle\Entity\Stock $stocks
+     */
+    public function removeStock(\Finance\StockBundle\Entity\Stock $stocks)
+    {
+        $this->stocks->removeElement($stocks);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Finance\UserBundle\Entity\User $user
+     * @return Portfolio
+     */
+    public function setUser(\Finance\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Finance\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

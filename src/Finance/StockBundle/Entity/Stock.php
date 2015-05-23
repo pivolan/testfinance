@@ -43,6 +43,12 @@ class Stock
     private $price;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Finance\StockBundle\Entity\Portfolio", mappedBy="stocks", cascade={"persist",
+     * "remove"})
+     **/
+    private $portfolios;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -53,7 +59,7 @@ class Stock
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,7 +82,7 @@ class Stock
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -99,7 +105,7 @@ class Stock
     /**
      * Get symbol
      *
-     * @return string 
+     * @return string
      */
     public function getSymbol()
     {
@@ -122,7 +128,7 @@ class Stock
     /**
      * Get price
      *
-     * @return string 
+     * @return string
      */
     public function getPrice()
     {
@@ -145,10 +151,50 @@ class Stock
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->portfolios = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add portfolios
+     *
+     * @param \Finance\StockBundle\Entity\Portfolio $portfolios
+     * @return Stock
+     */
+    public function addPortfolio(\Finance\StockBundle\Entity\Portfolio $portfolios)
+    {
+        $this->portfolios[] = $portfolios;
+
+        return $this;
+    }
+
+    /**
+     * Remove portfolios
+     *
+     * @param \Finance\StockBundle\Entity\Portfolio $portfolios
+     */
+    public function removePortfolio(\Finance\StockBundle\Entity\Portfolio $portfolios)
+    {
+        $this->portfolios->removeElement($portfolios);
+    }
+
+    /**
+     * Get portfolios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPortfolios()
+    {
+        return $this->portfolios;
     }
 }
