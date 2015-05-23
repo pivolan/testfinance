@@ -49,6 +49,8 @@ class PortfolioAdmin extends Admin
         $formMapper
             ->add('id')
             ->add('name')
+            ->add('user')
+            ->add('stocks')
             ->add('createdAt')
         ;
     }
@@ -61,6 +63,8 @@ class PortfolioAdmin extends Admin
         $showMapper
             ->add('id')
             ->add('name')
+            ->add('user')
+            ->add('stocks')
             ->add('createdAt')
         ;
     }

@@ -13,11 +13,6 @@ finance_user:
     type:     annotation
     prefix:   /
 
-finance_core:
-    resource: "@FinanceCoreBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
