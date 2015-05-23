@@ -23,11 +23,11 @@ class AppKernel extends Kernel
 
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             // Then add SonataAdminBundle
             new Sonata\AdminBundle\SonataAdminBundle(),
 
             new Finance\CoreBundle\FinanceCoreBundle(),
+            new Finance\UserBundle\FinanceUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
