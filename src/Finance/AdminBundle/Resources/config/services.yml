@@ -4,3 +4,15 @@ services:
         arguments: [~, Finance\UserBundle\Entity\User, FinanceAdminBundle:UserAdmin]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: User}
+
+    finance_admin.admin.stock:
+        class: Finance\AdminBundle\Admin\StockAdmin
+        arguments: [~, Finance\StockBundle\Entity\Stock, FinanceAdminBundle:StockAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Stock}
+
+    finance_admin.admin.portfolio:
+        class: Finance\AdminBundle\Admin\PortfolioAdmin
+        arguments: [~, Finance\StockBundle\Entity\Portfolio, FinanceAdminBundle:PortfolioAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Portfolio}
