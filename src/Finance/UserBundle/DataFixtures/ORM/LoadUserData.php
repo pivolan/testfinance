@@ -2,18 +2,17 @@
 
 namespace Application\Sonata\UserBundle\DataFixtures\ORM;
 
-
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Finance\UserBundle\Entity\User;
+use FOS\UserBundle\Util\UserManipulator;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadUserData extends AbstractFixture
+class LoadUserData implements ContainerAwareInterface, FixtureInterface
 {
+    /** @var ContainerInterface */
+    private $container;
+
     /**
      * Load data fixtures with the passed EntityManager
      *
@@ -21,28 +20,27 @@ class LoadUserData extends AbstractFixture
      */
     function load(ObjectManager $manager)
     {
-
-        $user = new User();
-        $user->setUsername('admin');
-        $user->setEmail('admin@admin.lo');
-        $user->setPlainPassword('qwerty');
-        $user->setEnabled(true);
-        $user->addRole(User::ROLE_SUPER_ADMIN);
-        $manager->persist($user);
+        /** @var UserManipulator $manipulator */
+        $manipulator = $this->container->get('fos_user.util.user_manipulator');
+        $password = 'qwerty';
+        $manipulator->create('admin', $password, 'admin@admin.lo', false, true);
 
         $s = range(2, 15);
-
         foreach ($s as $id) {
-            $user = new User();
-            $typeName = 'client' . $id;
-            $user->setUsername($typeName);
-            $user->setEmail($typeName . '@admin.lo');
-            $user->setPlainPassword('qwerty');
-            $user->setEnabled(true);
-            $manager->persist($user);
-            $this->addReference($id, $user);
+            $username = 'user' . $id;
+            $manipulator->create($username, $password, $username . '@admin.lo', false, false);
         }
+    }
 
-        $manager->flush();
+    /**
+     * Sets the Container.
+     *
+     * @param ContainerInterface|null $container A ContainerInterface instance or null
+     *
+     * @api
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 }
